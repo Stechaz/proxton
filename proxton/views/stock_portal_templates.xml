@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Add Deliveries to Portal Home -->
+    <template id="portal_my_home_delivery" name="Show Deliveries" customize_show="True" inherit_id="portal.portal_my_home" priority="30">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_client_category_enable" t-value="True"/>
+        </xpath>
+        <div id="portal_client_category" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/stock/static/description/icon.png'"/>
+                <t t-set="title">Deliveries</t>
+                <t t-set="url" t-value="'/my/deliveries'"/>
+                <t t-set="text">View your delivery slips</t>
+                <t t-set="placeholder_count" t-value="'delivery_count'"/>
+            </t>
+        </div>
+    </template>
+
+    <!-- Breadcrumb for deliveries -->
+    <template id="portal_my_home_menu_delivery" name="Portal layout: delivery menu entry" inherit_id="portal.portal_breadcrumbs" priority="30">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'delivery' or picking" t-attf-class="breadcrumb-item #{'active ' if not picking else ''}">
+                <a t-if="picking" t-attf-href="/my/deliveries?{{ keep_query() }}">Deliveries</a>
+                <t t-else="">Deliveries</t>
+            </li>
+            <li t-if="picking" class="breadcrumb-item active">
+                <t t-out="picking.name"/>
+            </li>
+        </xpath>
+    </template>
+
+    <!-- Deliveries List Page -->
+    <template id="portal_my_deliveries" name="My Deliveries">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Deliveries</t>
+            </t>
+
+            <div t-if="not deliveries" class="alert alert-warning" role="alert">
+                There are currently no deliveries for your account.
+            </div>
+
+            <t t-if="deliveries" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>
+                            <span class='d-none d-md-inline'>Delivery #</span>
+                            <span class='d-block d-md-none'>Ref.</span>
+                        </th>
+                        <th class="text-center">Date</th>
+                        <th class="text-center">Source Document</th>
+                        <th class="text-end">Status</th>
+                    </tr>
+                </thead>
+                <t t-foreach="deliveries" t-as="delivery">
+                    <tr>
+                        <td>
+                            <a t-att-href="delivery.get_portal_url()">
+                                <t t-out="delivery.name"/>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <span t-field="delivery.date_done" t-options="{'widget': 'date'}"/>
+                        </td>
+                        <td class="text-center">
+                            <span t-out="delivery.origin"/>
+                        </td>
+                        <td class="text-end">
+                            <span class="badge rounded-pill text-bg-success">
+                                <t t-out="delivery.state"/>
+                            </span>
+                        </td>
+                    </tr>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Delivery Detail Page -->
+    <template id="portal_my_delivery_detail" name="Delivery Slip">
+        <t t-call="portal.portal_layout">
+            <t t-set="o_portal_fullwidth_alert" groups="stock.group_stock_user">
+                <t t-call="portal.portal_back_in_edit_mode">
+                    <t t-set="backend_url" t-value="'/odoo/action-stock.action_picking_tree_all/%s' % (picking.id)"/>
+                </t>
+            </t>
+
+            <div id="delivery_content" class="col-12 col-lg justify-content-end">
+                <div class="card pb-5">
+                    <div class="card-header bg-white pb-2 pt-3">
+                        <div class="row">
+                            <div class="col-12 col-md-6 mb-1">
+                                <h4 class="mb-0">
+                                    <span>Delivery </span>
+                                    <span t-field="picking.name"/>
+                                </h4>
+                            </div>
+                            <div class="col-12 col-md-6 text-md-end mb-1">
+                                <span class="badge rounded-pill text-bg-info">
+                                    <i class="fa fa-fw fa-clock-o" aria-label="Date" title="Date" role="img"/>
+                                    <span t-field="picking.scheduled_date" t-options="{'widget': 'date'}"/>
+                                </span>
+                                <span t-if="picking.state == 'done'" class="badge rounded-pill text-bg-success ms-1">
+                                    <i class="fa fa-fw fa-check" aria-label="Done" title="Done" role="img"/>
+                                    Done
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <!-- Delivery Info -->
+                        <div class="row mb-4">
+                            <div class="col-12 col-md-6">
+                                <strong>Delivery Address:</strong>
+                                <address t-field="picking.partner_id" t-options='{"widget": "contact", "fields": ["address", "name", "phone", "email"], "no_marker": True}'/>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <strong>Source Document:</strong>
+                                <p t-if="picking.origin" t-out="picking.origin"/>
+                                <p t-else="">-</p>
+
+                                <strong>Delivery Date:</strong>
+                                <p t-field="picking.date_done" t-options="{'widget': 'datetime'}"/>
+                            </div>
+                        </div>
+
+                        <!-- Products Table -->
+                        <h5>Products</h5>
+                        <table class="table table-sm">
+                            <thead class="bg-100">
+                                <tr>
+                                    <th>Product</th>
+                                    <th class="text-end">Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="picking.move_ids.filtered(lambda m: m.state == 'done')" t-as="move">
+                                    <tr>
+                                        <td>
+                                            <span t-field="move.product_id.name"/>
+                                            <small t-if="move.description_picking and move.description_picking != move.product_id.name" class="text-muted d-block">
+                                                <t t-out="move.description_picking"/>
+                                            </small>
+                                        </td>
+                                        <td class="text-end">
+                                            <span t-field="move.quantity"/>
+                                            <span t-field="move.product_uom"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <!-- Download Delivery Slip -->
+                        <div class="mt-4">
+                            <a t-att-href="picking.get_portal_url(report_type='pdf', download=True)" class="btn btn-secondary">
+                                <i class="fa fa-download"/> Download Delivery Slip
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chatter -->
+                <div id="delivery_communication" class="mt-4">
+                    <h4><strong>History</strong></h4>
+                    <t t-call="portal.message_thread"/>
+                </div>
+            </div>
+        </t>
+    </template>
+
+</odoo>
+

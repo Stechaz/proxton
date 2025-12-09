@@ -1,0 +1,40 @@
+*.pyc
+*.pyo
+*.swp
+.DS_Store
+__pycache__/
+.idea/
+.vscode/
+*.egg-info/
+*.pot
+*.po~
+*.mo~
+*.db
+*.log
+*.tmp
+*.bak
+*.orig
+.*.un~
+*.sass-cache/
+node_modules/
+dist/
+build/
+static/
+*.zip
+*.tar.gz
+
+# Odoo specifics
+/.local/
+/tests/common.py
+/tests/test_*.py
+/odoo/
+.env
+.env.*
+*.coveragerc
+
+# Ignore generated translations
+i18n/*.pot
+i18n_extra/*.pot
+
+# Misc
+!.gitignore
