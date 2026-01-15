@@ -10,3 +10,4 @@ access_product_template_portal,product.template.portal,product.model_product_tem
 access_proxton_checklist_item,proxton.checklist.item,model_proxton_checklist_item,base.group_user,1,1,1,1
 access_proxton_environment_tag,proxton.environment.tag,model_proxton_environment_tag,base.group_user,1,1,1,1
 access_proxton_industry_tag,proxton.industry.tag,model_proxton_industry_tag,base.group_user,1,1,1,1
+access_crm_lead_responsibility,crm.lead.responsibility,model_crm_lead_responsibility,base.group_user,1,1,1,1

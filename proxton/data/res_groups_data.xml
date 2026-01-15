@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Enable delivery address feature for all internal users -->
+        <record id="base.group_user" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('account.group_delivery_invoice_address'))]"/>
+        </record>
+    </data>
+</odoo>

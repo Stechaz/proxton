@@ -15,6 +15,15 @@
                     <field name="expected_end_date" nolabel="1" class="oe_inline"/>
                 </div>
             </xpath>
+            <xpath expr="//label[@for='phone']/following-sibling::div[1]" position="after">
+                <label for="responsibility_ids"/>
+                <field name="responsibility_ids" nolabel="1">
+                    <list editable="bottom" create="false" delete="false">
+                        <field name="role_id" readonly="1"/>
+                        <field name="user_id"/>
+                    </list>
+                </field>
+            </xpath>
             <xpath expr="//field[@name='description']" position="attributes">
                 <attribute name="required">1</attribute>
             </xpath>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- Project Templates for each project type -->
+        <record id="project_template_new_device" model="project.project">
+            <field name="name">Vývoj nového zariadenia</field>
+            <field name="is_template">True</field>
+            <field name="allow_billable">True</field>
+            <field name="billing_type">not_billable</field>
+        </record>
+
+        <record id="project_template_modular_device" model="project.project">
+            <field name="name">Výroba modulárneho zariadenia</field>
+            <field name="is_template">True</field>
+            <field name="allow_billable">True</field>
+            <field name="billing_type">not_billable</field>
+        </record>
+
+        <record id="project_template_modify_device" model="project.project">
+            <field name="name">Úprava existujúceho zariadenia</field>
+            <field name="is_template">True</field>
+            <field name="allow_billable">True</field>
+            <field name="billing_type">not_billable</field>
+        </record>
+
+        <record id="project_template_automation" model="project.project">
+            <field name="name">Automatizácia procesu</field>
+            <field name="is_template">True</field>
+            <field name="allow_billable">True</field>
+            <field name="billing_type">not_billable</field>
+        </record>
+
+        <record id="project_template_documentation" model="project.project">
+            <field name="name">Dokumentácia</field>
+            <field name="is_template">True</field>
+            <field name="allow_billable">True</field>
+            <field name="billing_type">not_billable</field>
+        </record>
+
+        <record id="project_template_service" model="project.project">
+            <field name="name">Servis</field>
+            <field name="is_template">True</field>
+            <field name="allow_billable">True</field>
+            <field name="billing_type">not_billable</field>
+        </record>
+
+        <record id="project_template_consultation" model="project.project">
+            <field name="name">Konzultácia</field>
+            <field name="is_template">True</field>
+            <field name="allow_billable">True</field>
+            <field name="billing_type">not_billable</field>
+        </record>
+
+        <record id="project_template_spare_part" model="project.project">
+            <field name="name">Náhradný diel</field>
+            <field name="is_template">True</field>
+            <field name="allow_billable">True</field>
+            <field name="billing_type">not_billable</field>
+        </record>
+    </data>
+</odoo>

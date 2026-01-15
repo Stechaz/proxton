@@ -120,6 +120,19 @@ class CrmLead(models.Model):
         domain=[('category', '=', 'attachments')],
     )
 
+    responsibility_ids = fields.One2many(
+        'crm.lead.responsibility',
+        'lead_id',
+        string='Zodpovednosti',
+        default=lambda self: self._default_responsibility_ids(),
+    )
+
+    @api.model
+    def _default_responsibility_ids(self):
+        """Prepopulate responsibility_ids with all project roles."""
+        roles = self.env['project.role'].search([])
+        return [(0, 0, {'role_id': role.id}) for role in roles]
+
     @api.depends('time_and_process_constraints')
     def _compute_has_fixed_deadline(self):
         for lead in self:
