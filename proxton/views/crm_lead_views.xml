@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="crm_lead_view_form_inherit_proxton" model="ir.ui.view">
+        <field name="name">crm.lead.form.inherit.proxton</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//label[@for='date_deadline']/following-sibling::div[1]" position="after">
+                <label for="expected_start_date"/>
+                <div class="d-flex gap-3 align-items-center">
+                    <field name="expected_start_date" nolabel="1" class="oe_inline"/>
+                </div>
+                <label for="expected_end_date"/>
+                <div class="d-flex gap-3 align-items-center">
+                    <field name="expected_end_date" nolabel="1" class="oe_inline"/>
+                </div>
+            </xpath>
+            <xpath expr="//label[@for='phone']/following-sibling::div[1]" position="after">
+                <label for="responsibility_ids"/>
+                <field name="responsibility_ids" nolabel="1">
+                    <list editable="bottom" create="false" delete="false">
+                        <field name="role_id" readonly="1"/>
+                        <field name="user_id"/>
+                    </list>
+                </field>
+            </xpath>
+            <xpath expr="//field[@name='description']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//notebook/page[@name='internal_notes']" position="before">
+                <page string="Proxton" name="proxton_custom">
+                    <group>
+                        <group>
+                            <field name="project_type"/>
+                            <field name="project_difficulty"/>
+                            <field name="development_type"/>
+                        </group>
+                    </group>
+                    <group string="Technologický rozsah">
+                        <group>
+                            <field name="specification_level"/>
+                        </group>
+                    </group>
+                    <group col="4">
+                        <group string="Mechanika" class="text-nowrap">
+                            <field name="mechanics_ids" widget="many2many_checkboxes" nolabel="1" class="text-nowrap"/>
+                        </group>
+                        <group string="Elektrika" class="text-nowrap">
+                            <field name="electrical_ids" widget="many2many_checkboxes" nolabel="1" class="text-nowrap"/>
+                        </group>
+                        <group string="Automatizácia" class="text-nowrap">
+                            <field name="automation_ids" widget="many2many_checkboxes" nolabel="1" class="text-nowrap"/>
+                        </group>
+                        <group string="Kvalita" class="text-nowrap">
+                            <field name="quality_ids" widget="many2many_checkboxes" nolabel="1" class="text-nowrap"/>
+                        </group>
+                    </group>
+                    <group col="3">
+                        <group string="Energie a médiá" class="text-nowrap">
+                            <field name="energy_ids" widget="many2many_checkboxes" nolabel="1" class="text-nowrap"/>
+                        </group>
+                        <group string="Dokumentácia" class="text-nowrap">
+                            <field name="documentation_ids" widget="many2many_checkboxes" nolabel="1" class="text-nowrap"/>
+                        </group>
+                        <group string="Rozsah dodávky" class="text-nowrap">
+                            <field name="delivery_scope_ids" widget="many2many_checkboxes" nolabel="1" class="text-nowrap"/>
+                        </group>
+                    </group>
+                    <group string="Kontext použitia">
+                        <group>
+                            <field name="environment_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                        </group>
+                        <group>
+                            <field name="industry_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                        </group>
+                    </group>
+                    <group string="Časové a procesné obmedzenia">
+                        <group>
+                            <field name="time_and_process_constraints" widget="many2many_checkboxes" nolabel="1" class="text-nowrap"/>
+                        </group>
+                        <group>
+                            <field name="has_fixed_deadline" invisible="1"/>
+                            <field name="required_delivery_date" invisible="not has_fixed_deadline"/>
+                        </group>
+                    </group>
+                    <group col="2">
+                        <group string="Riziká" class="text-nowrap">
+                            <field name="risk_ids" widget="many2many_checkboxes" nolabel="1" class="text-nowrap"/>
+                        </group>
+                        <group string="Prílohy" class="text-nowrap">
+                            <field name="attachment_checklist_ids" widget="many2many_checkboxes" nolabel="1" class="text-nowrap"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

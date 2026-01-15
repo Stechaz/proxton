@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Mechanika -->
+    <record id="checklist_mechanics_manufacturing" model="proxton.checklist.item">
+        <field name="name">Výroba dielov</field>
+        <field name="category">mechanics</field>
+    </record>
+    <record id="checklist_mechanics_assembly" model="proxton.checklist.item">
+        <field name="name">Montáž mechaniky</field>
+        <field name="category">mechanics</field>
+    </record>
+    <record id="checklist_mechanics_design" model="proxton.checklist.item">
+        <field name="name">Mechanický návrh</field>
+        <field name="category">mechanics</field>
+    </record>
+
+    <!-- Elektrika -->
+    <record id="checklist_electrical_wiring" model="proxton.checklist.item">
+        <field name="name">Elektrické zapojenie</field>
+        <field name="category">electrical</field>
+    </record>
+    <record id="checklist_electrical_cabinet" model="proxton.checklist.item">
+        <field name="name">Rozvádzač</field>
+        <field name="category">electrical</field>
+    </record>
+    <record id="checklist_electrical_safety" model="proxton.checklist.item">
+        <field name="name">Bezpečnostné obvody</field>
+        <field name="category">electrical</field>
+    </record>
+
+    <!-- Automatizácia -->
+    <record id="checklist_automation_plc" model="proxton.checklist.item">
+        <field name="name">PLC</field>
+        <field name="category">automation</field>
+    </record>
+    <record id="checklist_automation_robotics" model="proxton.checklist.item">
+        <field name="name">Robotika</field>
+        <field name="category">automation</field>
+    </record>
+    <record id="checklist_automation_hmi" model="proxton.checklist.item">
+        <field name="name">HMI / SCADA</field>
+        <field name="category">automation</field>
+    </record>
+
+    <!-- Kvalita -->
+    <record id="checklist_quality_fat" model="proxton.checklist.item">
+        <field name="name">FAT</field>
+        <field name="category">quality</field>
+    </record>
+    <record id="checklist_quality_sat" model="proxton.checklist.item">
+        <field name="name">SAT</field>
+        <field name="category">quality</field>
+    </record>
+    <record id="checklist_quality_standby" model="proxton.checklist.item">
+        <field name="name">STAND-BY Support</field>
+        <field name="category">quality</field>
+    </record>
+    <record id="checklist_quality_measurement" model="proxton.checklist.item">
+        <field name="name">Merací protokol</field>
+        <field name="category">quality</field>
+    </record>
+
+    <!-- Energie a médiá -->
+    <record id="checklist_energy_electrical" model="proxton.checklist.item">
+        <field name="name">Elektrická energia</field>
+        <field name="category">energy</field>
+    </record>
+    <record id="checklist_energy_pneumatics" model="proxton.checklist.item">
+        <field name="name">Pneumatika</field>
+        <field name="category">energy</field>
+    </record>
+    <record id="checklist_energy_hydraulics" model="proxton.checklist.item">
+        <field name="name">Hydraulika</field>
+        <field name="category">energy</field>
+    </record>
+    <record id="checklist_energy_process" model="proxton.checklist.item">
+        <field name="name">Procesné médiá</field>
+        <field name="category">energy</field>
+    </record>
+
+    <!-- Dokumentácia -->
+    <record id="checklist_doc_production" model="proxton.checklist.item">
+        <field name="name">Výrobná dokumentácia</field>
+        <field name="category">documentation</field>
+    </record>
+    <record id="checklist_doc_manual" model="proxton.checklist.item">
+        <field name="name">Užívateľský manuál</field>
+        <field name="category">documentation</field>
+    </record>
+    <record id="checklist_doc_el_revision" model="proxton.checklist.item">
+        <field name="name">EL. Revízie</field>
+        <field name="category">documentation</field>
+    </record>
+    <record id="checklist_doc_unit_tests" model="proxton.checklist.item">
+        <field name="name">Kusové skúšky</field>
+        <field name="category">documentation</field>
+    </record>
+    <record id="checklist_doc_vzt_revision" model="proxton.checklist.item">
+        <field name="name">VZT revízie</field>
+        <field name="category">documentation</field>
+    </record>
+    <record id="checklist_doc_ce" model="proxton.checklist.item">
+        <field name="name">CE</field>
+        <field name="category">documentation</field>
+    </record>
+    <record id="checklist_doc_static" model="proxton.checklist.item">
+        <field name="name">Statický posudok</field>
+        <field name="category">documentation</field>
+    </record>
+
+    <!-- Rozsah dodávky -->
+    <record id="checklist_delivery_solution" model="proxton.checklist.item">
+        <field name="name">Návrh riešenia</field>
+        <field name="category">delivery_scope</field>
+    </record>
+    <record id="checklist_delivery_engineering" model="proxton.checklist.item">
+        <field name="name">Detailný engineering</field>
+        <field name="category">delivery_scope</field>
+    </record>
+    <record id="checklist_delivery_production" model="proxton.checklist.item">
+        <field name="name">Výroba</field>
+        <field name="category">delivery_scope</field>
+    </record>
+    <record id="checklist_delivery_assembly" model="proxton.checklist.item">
+        <field name="name">Montáž</field>
+        <field name="category">delivery_scope</field>
+    </record>
+    <record id="checklist_delivery_commissioning" model="proxton.checklist.item">
+        <field name="name">Uvedenie do prevádzky</field>
+        <field name="category">delivery_scope</field>
+    </record>
+    <record id="checklist_delivery_documentation" model="proxton.checklist.item">
+        <field name="name">Dokumentácia</field>
+        <field name="category">delivery_scope</field>
+    </record>
+    <record id="checklist_delivery_training" model="proxton.checklist.item">
+        <field name="name">Školenie</field>
+        <field name="category">delivery_scope</field>
+    </record>
+    <!-- Časové a procesné obmedzenia -->
+    <record id="checklist_constraint_fixed_deadline" model="proxton.checklist.item">
+        <field name="name">Pevný deadline</field>
+        <field name="category">time_and_process_constraints</field>
+    </record>
+    <record id="checklist_constraint_customer_installation" model="proxton.checklist.item">
+        <field name="name">Inštalácia u zákazníka</field>
+        <field name="category">time_and_process_constraints</field>
+    </record>
+    <record id="checklist_constraint_operation_24_7" model="proxton.checklist.item">
+        <field name="name">Prevádzka 24/7</field>
+        <field name="category">time_and_process_constraints</field>
+    </record>
+    <record id="checklist_constraint_regulated_by_standards" model="proxton.checklist.item">
+        <field name="name">Regulované normami</field>
+        <field name="category">time_and_process_constraints</field>
+    </record>
+
+    <!-- Riziká -->
+    <record id="checklist_risk_unclear_inputs" model="proxton.checklist.item">
+        <field name="name">Nejasné vstupy od zákazníka</field>
+        <field name="category">risks</field>
+    </record>
+    <record id="checklist_risk_technical" model="proxton.checklist.item">
+        <field name="name">Technické riziko</field>
+        <field name="category">risks</field>
+    </record>
+    <record id="checklist_risk_subcontractor" model="proxton.checklist.item">
+        <field name="name">Závislosť na subdodávkach</field>
+        <field name="category">risks</field>
+    </record>
+    <record id="checklist_risk_long_lead" model="proxton.checklist.item">
+        <field name="name">Long-lead komponenty</field>
+        <field name="category">risks</field>
+    </record>
+
+    <!-- Prílohy -->
+    <record id="checklist_attachment_customer_spec" model="proxton.checklist.item">
+        <field name="name">Zadanie zákazníka</field>
+        <field name="category">attachments</field>
+    </record>
+    <record id="checklist_attachment_drawings" model="proxton.checklist.item">
+        <field name="name">Výkresy / layout</field>
+        <field name="category">attachments</field>
+    </record>
+    <record id="checklist_attachment_photos" model="proxton.checklist.item">
+        <field name="name">Fotky / video</field>
+        <field name="category">attachments</field>
+    </record>
+    <record id="checklist_attachment_3d" model="proxton.checklist.item">
+        <field name="name">3D data</field>
+        <field name="category">attachments</field>
+    </record>
+    <record id="checklist_attachment_existing_docs" model="proxton.checklist.item">
+        <field name="name">Existujúca dokumentácia</field>
+        <field name="category">attachments</field>
+    </record>
+</odoo>
