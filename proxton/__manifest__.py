@@ -10,6 +10,8 @@
     'data': [
         'security/ir.model.access.csv',
         'security/stock_security.xml',
+        'data/proxton_checklist_data.xml',
+        'views/crm_lead_views.xml',
         'views/stock_portal_templates.xml',
     ],
 }
