@@ -24,9 +24,9 @@
     ],
     'assets': {
         'web.assets_backend': [
-            'proxton/static/src/components/**/*.js',
-            'proxton/static/src/components/**/*.xml',
-            'proxton/static/src/components/**/*.scss',
+            'proxton/static/src/components/approvable_field/approvable_field.js',
+            'proxton/static/src/components/approvable_field/approvable_field.xml',
+            'proxton/static/src/components/approvable_field/approvable_field.scss',
         ],
     },
 }
