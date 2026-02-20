@@ -5,6 +5,10 @@
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.crm_lead_view_form"/>
         <field name="arch" type="xml">
+            <!-- Move tag_ids under phone-->
+            <xpath expr="//label[@for='phone']/following-sibling::div[1]" position="after">
+                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}" position="move"/>
+            </xpath>
             <xpath expr="//label[@for='date_deadline']/following-sibling::div[1]" position="after">
                 <label for="expected_start_date"/>
                 <div class="d-flex gap-3 align-items-center">
@@ -15,17 +19,15 @@
                     <field name="expected_end_date" nolabel="1" class="oe_inline"/>
                 </div>
             </xpath>
-            <xpath expr="//label[@for='phone']/following-sibling::div[1]" position="after">
-                <label for="responsibility_ids"/>
-                <field name="responsibility_ids" nolabel="1">
-                    <list editable="bottom" create="false" delete="false">
-                        <field name="role_id" readonly="1"/>
-                        <field name="user_id"/>
-                    </list>
-                </field>
+            <!-- Move description field from Notes tab to main form under tags -->
+            <xpath expr="//div[field[@name='lead_properties']]" position="after">
+                <group string="Stručný popis">
+                    <field name="description"  colspan="2" nolabel="1" placeholder="Uvedťe stručný popis projektu..." required="1"/>
+                </group>
             </xpath>
-            <xpath expr="//field[@name='description']" position="attributes">
-                <attribute name="required">1</attribute>
+            <!-- Hide the original Notes tab -->
+            <xpath expr="//notebook/page[@name='internal_notes']" position="attributes">
+                <attribute name="invisible">1</attribute>
             </xpath>
             <xpath expr="//notebook/page[@name='internal_notes']" position="before">
                 <page string="Proxton" name="proxton_custom">
@@ -91,6 +93,14 @@
                             <field name="attachment_checklist_ids" widget="many2many_checkboxes" nolabel="1" class="text-nowrap"/>
                         </group>
                     </group>
+                </page>
+                <page string="Zodpovedné osoby">
+                <field name="responsibility_ids" nolabel="1">
+                    <list editable="bottom" create="false" delete="false">
+                        <field name="role_id" readonly="1"/>
+                        <field name="user_id"/>
+                    </list>
+                </field>
                 </page>
             </xpath>
         </field>

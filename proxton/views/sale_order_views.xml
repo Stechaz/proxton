@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_order_view_form_inherit_proxton" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.proxton</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Fields in left column (partner_details) -->
+            <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                <field name="opportunity_description"
+                       approvable="1"
+                       approval_source_method="get_approval_source_info"
+                       approval_source_field="description"
+                       invisible="not opportunity_id"/>
+                <field name="project_type"
+                       approvable="1"
+                       approval_source_method="get_approval_source_info"
+                       approval_source_field="project_type"
+                       invisible="not opportunity_id"/>
+                <field name="project_difficulty"
+                       approvable="1"
+                       approval_source_method="get_approval_source_info"
+                       approval_source_field="project_difficulty"
+                       invisible="not opportunity_id"/>
+                <field name="development_type"
+                       approvable="1"
+                       approval_source_method="get_approval_source_info"
+                       approval_source_field="development_type"
+                       invisible="not opportunity_id"/>
+            </xpath>
+            <!-- Fields in right column (order_details) -->
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="contractual_delivery_date"/>
+                <field name="is_deadline_fixed"/>
+            </xpath>
+            <!-- Collapsible sections after the header group, before notebook -->
+            <xpath expr="//group[@name='sale_header']" position="after">
+                <div class="row">
+                    <div class="col-12">
+                        <details class="o_proxton_collapsible mb-3">
+                            <summary class="fw-bold mb-2">Požiadavky a obmedzenia</summary>
+                            <group>
+                                <group>
+                                    <field name="standards_certification" approvable="1"/>
+                                    <field name="safety_requirements" approvable="1"/>
+                                </group>
+                                <group>
+                                    <field name="nda_ip_restrictions" approvable="1"/>
+                                    <field name="penalties_sla" approvable="1"/>
+                                </group>
+                            </group>
+                        </details>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <details class="o_proxton_collapsible mb-3">
+                            <summary class="fw-bold mb-2">Porovnanie objednávky</summary>
+                            <group>
+                                <group>
+                                    <field name="total_price_comparison" approvable="1"/>
+                                    <label for="items_check_cp_po"/>
+                                    <div class="d-flex align-items-center">
+                                        <field name="items_check_cp_po"
+                                               nolabel="1"
+                                               approvable="1"
+                                               class="o_proxton_category_approval"/>
+                                    </div>
+                                    <field name="pricing_model" approvable="1"/>
+                                </group>
+                                <group>
+                                    <field name="invoicing_model" approvable="1"/>
+                                    <field name="advance_invoicing" approvable="1"/>
+                                </group>
+                            </group>
+                        </details>
+                    </div>
+                </div>
+            </xpath>
+            <!-- Add Proxton tab with checklist categories -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Proxton" name="proxton_checklist" invisible="not opportunity_id">
+                    <!-- First row: 4 columns -->
+                    <div class="row">
+                        <!-- Mechanika -->
+                        <div class="col-3 o_proxton_category">
+                            <div class="d-flex align-items-center gap-2 mb-2 o_proxton_category_header">
+                                <span class="fw-bold">Mechanika</span>
+                                <field name="mechanics_approved"
+                                       nolabel="1"
+                                       approvable="1"
+                                       class="o_proxton_category_approval"/>
+                            </div>
+                            <field name="mechanics_ids" widget="many2many_checkboxes" nolabel="1" class="text-nowrap"/>
+                        </div>
+                        <!-- Elektrika -->
+                        <div class="col-3 o_proxton_category">
+                            <div class="d-flex align-items-center gap-2 mb-2 o_proxton_category_header">
+                                <span class="fw-bold">Elektrika</span>
+                                <field name="electrical_approved"
+                                       nolabel="1"
+                                       approvable="1"
+                                       class="o_proxton_category_approval"/>
+                            </div>
+                            <field name="electrical_ids" widget="many2many_checkboxes" nolabel="1" class="text-nowrap"/>
+                        </div>
+                        <!-- Automatizácia -->
+                        <div class="col-3 o_proxton_category">
+                            <div class="d-flex align-items-center gap-2 mb-2 o_proxton_category_header">
+                                <span class="fw-bold">Automatizácia</span>
+                                <field name="automation_approved"
+                                       nolabel="1"
+                                       approvable="1"
+                                       class="o_proxton_category_approval"/>
+                            </div>
+                            <field name="automation_ids" widget="many2many_checkboxes" nolabel="1" class="text-nowrap"/>
+                        </div>
+                        <!-- Kvalita -->
+                        <div class="col-3 o_proxton_category">
+                            <div class="d-flex align-items-center gap-2 mb-2 o_proxton_category_header">
+                                <span class="fw-bold">Kvalita</span>
+                                <field name="quality_approved"
+                                       nolabel="1"
+                                       approvable="1"
+                                       class="o_proxton_category_approval"/>
+                            </div>
+                            <field name="quality_ids" widget="many2many_checkboxes" nolabel="1" class="text-nowrap"/>
+                        </div>
+                    </div>
+                    <!-- Second row: 4 columns -->
+                    <div class="row mt-4">
+                        <!-- Energie a médiá -->
+                        <div class="col-3 o_proxton_category">
+                            <div class="d-flex align-items-center gap-2 mb-2 o_proxton_category_header">
+                                <span class="fw-bold">Energie a médiá</span>
+                                <field name="energy_approved"
+                                       nolabel="1"
+                                       approvable="1"
+                                       class="o_proxton_category_approval"/>
+                            </div>
+                            <field name="energy_ids" widget="many2many_checkboxes" nolabel="1" class="text-nowrap"/>
+                        </div>
+                        <!-- Dokumentácia -->
+                        <div class="col-3 o_proxton_category">
+                            <div class="d-flex align-items-center gap-2 mb-2 o_proxton_category_header">
+                                <span class="fw-bold">Dokumentácia</span>
+                                <field name="documentation_approved"
+                                       nolabel="1"
+                                       approvable="1"
+                                       class="o_proxton_category_approval"/>
+                            </div>
+                            <field name="documentation_ids" widget="many2many_checkboxes" nolabel="1" class="text-nowrap"/>
+                        </div>
+                        <!-- Rozsah dodávky -->
+                        <div class="col-3 o_proxton_category">
+                            <div class="d-flex align-items-center gap-2 mb-2 o_proxton_category_header">
+                                <span class="fw-bold">Rozsah dodávky</span>
+                                <field name="delivery_scope_approved"
+                                       nolabel="1"
+                                       approvable="1"
+                                       class="o_proxton_category_approval"/>
+                            </div>
+                            <field name="delivery_scope_ids" widget="many2many_checkboxes" nolabel="1" class="text-nowrap"/>
+                        </div>
+                        <!-- Riziká -->
+                        <div class="col-3 o_proxton_category">
+                            <div class="d-flex align-items-center gap-2 mb-2 o_proxton_category_header">
+                                <span class="fw-bold">Riziká</span>
+                                <field name="risks_approved"
+                                       nolabel="1"
+                                       approvable="1"
+                                       class="o_proxton_category_approval"/>
+                            </div>
+                            <field name="risk_ids" widget="many2many_checkboxes" nolabel="1" class="text-nowrap"/>
+                        </div>
+                    </div>
+                </page>
+            </xpath>
+                        <!-- Add Zodpovedné osoby tab -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Zodpovedné osoby" name="responsibility_tab">
+                    <field name="responsibility_ids" nolabel="1">
+                        <list editable="bottom">
+                            <field name="role_id"/>
+                            <field name="user_id"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

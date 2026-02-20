@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Add work entry rounding setting to Payroll settings -->
+    <record id="res_config_settings_view_form_inherit_proxton" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.proxton</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="hr_payroll.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='hr_payroll_settings']" position="inside">
+                <setting string="Work Entry Rounding" id="work_entry_rounding"
+                         help="Round work entry duration to the nearest X minutes">
+                    <div class="content-group">
+                        <div class="row mt16">
+                            <label for="work_entry_rounding_interval" class="col-lg-4 o_light_label"/>
+                            <field name="work_entry_rounding_interval" class="col-lg-2"/>
+                            <span class="col-lg-6">minutes (0 = no rounding)</span>
+                        </div>
+                        <div class="text-muted">
+                            Example: 15 means 8:07 → 8:00, 8:08 → 8:15
+                        </div>
+                    </div>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>

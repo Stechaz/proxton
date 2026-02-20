@@ -6,7 +6,7 @@
     'author': 'Strauberi',
     'website': 'https://www.strauberi.com',
     'category': 'Strauberi',
-    'depends': ['base', 'crm', 'sale_management', 'sale_project', 'sale_timesheet', 'stock', 'mrp', 'web_studio', 'project', 'purchase', 'ai_app', 'portal'],
+    'depends': ['base', 'crm', 'hr_work_entry', 'hr_payroll', 'sale', 'sale_crm', 'sale_management', 'sale_project', 'sale_timesheet', 'stock', 'mrp', 'web_studio', 'project', 'purchase', 'ai_app', 'portal', 'l10n_sk'],
     'data': [
         'security/ir.model.access.csv',
         'security/stock_security.xml',
@@ -14,6 +14,19 @@
         'data/project_templates.xml',
         'data/res_groups_data.xml',
         'views/crm_lead_views.xml',
+        'views/hr_work_entry_views.xml',
+        'views/res_company_views.xml',
+        'views/res_config_settings_views.xml',
+        'views/res_partner_views.xml',
+        'views/sale_order_views.xml',
         'views/stock_portal_templates.xml',
+        'report/sale_report_templates.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'proxton/static/src/components/**/*.js',
+            'proxton/static/src/components/**/*.xml',
+            'proxton/static/src/components/**/*.scss',
+        ],
+    },
 }

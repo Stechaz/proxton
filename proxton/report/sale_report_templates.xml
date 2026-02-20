@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Override sale order report to add company_registry and tax_id in customer address block -->
+    <template id="report_saleorder_document_inherit_proxton"
+              inherit_id="sale.report_saleorder_document">
+        <!-- Add company_registry and tax_id before VAT in customer address block -->
+        <xpath expr="//t[@t-set='address']//p[@t-if='doc.partner_id.vat']" position="before">
+            <p t-if="doc.partner_id.company_registry" class="mb-0">
+                <t t-if="doc.partner_id.lang and doc.partner_id.lang.startswith('sk')">IČO</t>
+                <t t-else="">Company ID</t>: <span t-field="doc.partner_id.company_registry"/>
+            </p>
+            <p t-if="doc.partner_id.tax_id" class="mb-0">
+                <t t-if="doc.partner_id.lang and doc.partner_id.lang.startswith('sk')">DIČ</t>
+                <t t-else="">Tax ID</t>: <span t-field="doc.partner_id.tax_id"/>
+            </p>
+        </xpath>
+        <!-- Hide "Connect your software" message -->
+        <xpath expr="//div[contains(@t-if, '_get_edi_builders')]" position="replace">
+            <!-- Hidden -->
+        </xpath>
+    </template>
+
+    <!-- Override delivery note to add company_registry and tax_id in customer address block -->
+    <template id="report_delivery_document_inherit_proxton"
+              inherit_id="stock.report_delivery_document">
+        <!-- Remove vat from contact widget - we'll add it in correct order -->
+        <xpath expr="//div[@name='partner_header']/div[@t-field='partner.commercial_partner_id']" position="attributes">
+            <attribute name="t-options">{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}</attribute>
+        </xpath>
+        <!-- Add IČO, DIČ, IČ DPH in correct order after partner address -->
+        <xpath expr="//div[@name='partner_header']" position="after">
+            <div t-if="partner.commercial_partner_id.company_registry" class="mb-0">
+                <t t-if="partner.commercial_partner_id.lang and partner.commercial_partner_id.lang.startswith('sk')">IČO</t>
+                <t t-else="">Company ID</t>: <span t-field="partner.commercial_partner_id.company_registry"/>
+            </div>
+            <div t-if="partner.commercial_partner_id.tax_id" class="mb-0">
+                <t t-if="partner.commercial_partner_id.lang and partner.commercial_partner_id.lang.startswith('sk')">DIČ</t>
+                <t t-else="">Tax ID</t>: <span t-field="partner.commercial_partner_id.tax_id"/>
+            </div>
+            <div t-if="partner.commercial_partner_id.vat" class="mb-0">
+                <t t-if="o.company_id.account_fiscal_country_id.vat_label" t-out="o.company_id.account_fiscal_country_id.vat_label"/>
+                <t t-else="">VAT</t>: <span t-field="partner.commercial_partner_id.vat"/>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- Hide the l10n_sk additions that appear outside SVG by targeting them by position -->
+    <template id="external_layout_folder_hide_sk_outside"
+              inherit_id="l10n_sk.l10n_sk_external_layout_folder">
+        <!-- Hide all 3 divs added by l10n_sk after o_folder_company_info -->
+        <xpath expr="//div[hasclass('o_folder_company_info')]/following-sibling::div[1]" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('o_folder_company_info')]/following-sibling::div[2]" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('o_folder_company_info')]/following-sibling::div[3]" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+    </template>
+
+    <!-- Add company IČO, DIČ, IČ DPH INSIDE the folder SVG on the LEFT side -->
+    <template id="external_layout_folder_inherit_proxton"
+              inherit_id="web.external_layout_folder">
+        <!-- Add align-items-start to prevent flex stretching -->
+        <xpath expr="//div[hasclass('o_folder_company_info')]" position="attributes">
+            <attribute name="class">o_folder_company_info d-flex justify-content-between align-items-start</attribute>
+        </xpath>
+        <!-- Remove bottom margin from logo to save space -->
+        <xpath expr="//div[hasclass('o_folder_company_info')]/div[1]/img" position="attributes">
+            <attribute name="class">o_company_logo_big mb-0</attribute>
+        </xpath>
+        <!-- Add identification fields right after the logo -->
+        <xpath expr="//div[hasclass('o_folder_company_info')]/div[1]/img" position="after">
+            <t t-set="doc_lang" t-value="(o.partner_id.lang or 'en_US') if o and o.partner_id else 'en_US'"/>
+            <div t-if="company.account_fiscal_country_id.code == 'SK'" style="margin-top: 20px">
+                <div t-if="company.company_registry">
+                    <t t-if="doc_lang and doc_lang[:2] == 'sk'">IČO</t>
+                    <t t-else="">Company ID</t>: <span t-field="company.company_registry"/>
+                </div>
+                <div t-if="company.partner_id.tax_id">
+                    <t t-if="doc_lang and doc_lang[:2] == 'sk'">DIČ</t>
+                    <t t-else="">Tax ID</t>: <span t-field="company.partner_id.tax_id"/>
+                </div>
+                <div t-if="company.vat">
+                    <t t-if="doc_lang and doc_lang[:2] == 'sk'">IČ DPH</t>
+                    <t t-else="">VAT</t>: <span t-field="company.vat"/>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>
