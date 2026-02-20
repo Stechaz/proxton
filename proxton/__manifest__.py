@@ -6,7 +6,7 @@
     'author': 'Strauberi',
     'website': 'https://www.strauberi.com',
     'category': 'Strauberi',
-    'depends': ['base', 'crm', 'hr_work_entry', 'hr_payroll', 'sale', 'sale_crm', 'sale_management', 'sale_project', 'sale_timesheet', 'stock', 'mrp', 'web_studio', 'project', 'purchase', 'ai_app', 'portal', 'l10n_sk'],
+    'depends': ['base', 'crm', 'hr_work_entry', 'hr_payroll', 'sale', 'sale_crm', 'sale_management', 'sale_project', 'sale_timesheet', 'stock', 'mrp', 'web_studio', 'project', 'purchase', 'ai_app', 'portal', 'l10n_sk', 'hr_work_entry', 'hr_work_entry_enterprise'],
     'data': [
         'security/ir.model.access.csv',
         'security/stock_security.xml',
