@@ -1,0 +1,133 @@
+// Approval button styles - always visible (not just on focus)
+.o_approval_buttons {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: flex !important;  // Always show, override Odoo's focus-only behavior
+    align-items: center;
+    height: 100%;
+    padding-right: 4px;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.o_approval_button {
+    font-size: 1.1em;
+    opacity: 0.6;
+    transition: opacity 0.2s, color 0.2s;
+    background: transparent !important;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    &.o_loading {
+        cursor: wait;
+        color: #6c757d;
+    }
+
+    &.o_approved {
+        color: #28a745;
+        opacity: 0.8;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    &.o_needs_reapproval {
+        color: #ffc107;
+        opacity: 1;
+        animation: approval-pulse 1.5s infinite;
+    }
+
+    &.o_not_approved {
+        color: #6c757d;
+    }
+
+    &.o_disabled {
+        color: #adb5bd;
+        cursor: not-allowed;
+        opacity: 0.4;
+    }
+}
+
+// Ensure field container has relative positioning for absolute button
+.o_field_widget:has(.o_approval_buttons) {
+    position: relative;
+
+    // Add padding to prevent text overlap with button
+    input, textarea, .o_input {
+        padding-right: 32px;
+    }
+}
+
+// For readonly fields, position differently
+.o_readonly_modifier:has(.o_approval_buttons) {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 8px;
+
+    .o_approval_buttons {
+        position: static;
+        height: auto;
+    }
+}
+
+// For text/html fields (multiline)
+.o_field_text:has(.o_approval_buttons),
+.o_field_html:has(.o_approval_buttons) {
+    .o_approval_buttons {
+        top: 4px;
+        height: auto;
+    }
+}
+
+@keyframes approval-pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+// Override Odoo's default behavior to hide field buttons when not focused
+// Approval buttons should always be visible so users can see approval status at a glance
+.o_form_view .o_field_widget {
+    .o_approval_buttons {
+        display: flex !important;
+        visibility: visible !important;
+    }
+}
+
+// Also ensure it's visible in list/kanban views if ever used there
+.o_list_view, .o_kanban_view {
+    .o_approval_buttons {
+        display: flex !important;
+        visibility: visible !important;
+    }
+}
+
+// Category approval fields - hide the checkbox, show only approval button
+.o_proxton_category_approval {
+    // Hide the actual boolean/checkbox input
+    .o_boolean_toggle,
+    .form-check,
+    input[type="checkbox"],
+    .o_checkbox {
+        display: none !important;
+    }
+
+    // Keep approval buttons visible and positioned correctly
+    .o_approval_buttons {
+        position: static !important;
+        display: flex !important;
+    }
+}
+
+// Category header styling
+.o_proxton_category_header {
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 4px;
+}

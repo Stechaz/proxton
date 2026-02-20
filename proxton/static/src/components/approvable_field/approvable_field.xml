@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <!-- Approval indicator component - shown as button on right side of field -->
+    <t t-name="proxton.ApprovalIndicator">
+        <button
+            type="button"
+            class="o_approval_button btn border-0 p-1"
+            t-att-class="{
+                'o_approved': state.isApproved and !state.needsReapproval,
+                'o_needs_reapproval': state.needsReapproval,
+                'o_not_approved': !state.isApproved and !state.loading,
+                'o_loading': state.loading,
+                'o_disabled': !props.record.resId,
+            }"
+            t-att-disabled="!props.record.resId"
+            t-att-title="checkboxTitle"
+            t-on-click="onApprovalClick"
+        >
+            <i t-if="state.loading and props.record.resId" class="fa fa-spinner fa-spin"/>
+            <i t-elif="state.isApproved and !state.needsReapproval" class="fa fa-check-circle"/>
+            <i t-elif="state.needsReapproval" class="fa fa-exclamation-circle"/>
+            <i t-else="" class="fa fa-circle-o"/>
+        </button>
+    </t>
+
+    <!-- Extended Field template - approval indicator in field input buttons area -->
+    <t t-name="proxton.ApprovableField">
+        <div t-att-name="props.name" t-att-class="classNames" t-att-style="props.style" t-att-data-tooltip-template="tooltip and 'web.FieldTooltip'" t-att-data-tooltip-info="tooltip">
+            <t t-component="field.component" t-props="fieldComponentProps"/>
+            <t t-if="isApprovable">
+                <div class="o_field_input_buttons o_approval_buttons">
+                    <ApprovalIndicator
+                        record="props.record"
+                        fieldName="props.name"
+                        approvalSourceMethod="approvalSourceMethod"
+                        approvalSourceField="approvalSourceField"
+                    />
+                </div>
+            </t>
+        </div>
+    </t>
+
+</templates>
